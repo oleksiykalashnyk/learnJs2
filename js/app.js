@@ -102,4 +102,74 @@ window.addEventListener("DOMContentLoaded", () => {
     setClock(".timer", deadLine);
 
 
+    //Part 3 practice MODAL
+
+    function closeModal() {
+        modal.classList.add("hide");
+        modal.classList.remove('show');
+        document.body.style.overflow = "";
+    }
+
+    function openModal() {
+        //open modal
+        modal.classList.add("show");
+        modal.classList.remove('hide');
+        document.body.style.overflow = "hidden";
+        //if use this function clear timer
+        clearInterval(modalTimerId);
+        //if use this function remove event for scroll
+        window.removeEventListener("scroll",showModalByScroll);
+    }
+    //3.1 Only one button
+    const
+        modalTrigger = document.querySelector("[data-modal]"),
+        modal = document.querySelector(".modal"),
+        modalCloseBtn = document.querySelector("[data-close]");
+
+    // modalTrigger.addEventListener("click", e => {
+    //     modal.classList.toggle("show");
+    //     document.body.style.overflow = "hidden";
+    // });
+
+    // modalCloseBtn.addEventListener("click", e => {
+    //     modal.classList.toggle("show");
+    //     document.body.style.overflow = "";
+    // });
+
+    //3.2 All buttons
+    const modalTriggerAll = document.querySelectorAll("[data-modal]");
+
+    modalTriggerAll.forEach(btn => {
+        btn.addEventListener("click", openModal);
+        modalCloseBtn.addEventListener("click", closeModal);
+    }); 
+
+
+
+    //3.3 Close modal if outside click 
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    //Close modal if use "ESCAPE"
+    document.addEventListener("keydown", (e) => {
+        if (e.code === "Escape" && modal.classList.contains("show")) {
+            closeModal();
+        }
+    });
+
+    //3.4 SetTimeOut show modal aafter 5 sec
+    const modalTimerId = setTimeout(openModal, 5000);
+
+    //3.5 window
+    function showModalByScroll(){
+        if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight){
+            openModal();
+            window.removeEventListener("scroll",showModalByScroll);
+        }
+    }
+    window.addEventListener("scroll",showModalByScroll);
 });
