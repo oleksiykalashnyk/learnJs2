@@ -1,42 +1,33 @@
 'use strict';
-//Learn "CLASS"
+//Learn "REST"  + SPREAD
 
 
-class Rectangle {
+//1. REST    in argument ( ...x) - all another arguments pack in the array
+const log = function (a, b, ...x) {
+    console.log(a, b, x);
+};
 
-    constructor(height, weight) {
-        //this is "super();"
-        this.height = height;
-        this.weight = weight;
-    }
+log("This A", "This B", 12, "other text");
 
-    calcArea() {
-        return this.height * this.weight;
-    }
+
+//2. SPREAD    Unpack array (...x) and create string (use all elements in the array)
+const printAllelements = (array) => {
+    console.log(...array);
+};
+
+const arr = [1, 3, 4, 5, 6, "sdsd", {
+    a: 2,
+    b: 23
+}];
+
+printAllelements(arr);
+
+//3. Function set default property
+function caldOrDouble(number,basis = 3){
+    //old style
+    //if not "basis"  basis = 2
+    basis = basis || 2;
+
+    console.log(number*basis);
 }
-
-//new class extends for Rectangle
-class ColoredRectangleWithText extends Rectangle {
-    constructor(height, weight, text, bgColor) {
-        //must stay first this say EXTENDS all constroct for parent class
-        super(height, weight);
-        //other property
-        this.text = text;
-        this.bgColor = bgColor;
-    }
-
-    showMyProperty(){
-        console.log(`Text: ${this.text}, colorBG: ${this.bgColor}`);
-    }
-}
-
-
-const p1 = new Rectangle(100, 32);
-const p2 = new Rectangle(530, 86);
-
-console.log(p1.calcArea());
-console.log(p2.calcArea());
-
-const p3 = new ColoredRectangleWithText(23,42,"WOW THIS TEXT", "red");
-p3.showMyProperty();
-console.log(p3.calcArea());
+caldOrDouble(3);
